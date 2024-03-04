@@ -1,0 +1,40 @@
+Mayor Monto Diario por Cliente = 
+MAXX(
+        SUMMARIZE(
+                fctVentas,
+                dimCalendario[Fecha],
+                dimCliente[ID_Cliente]
+        ),
+        [Monto de Venta]
+)
+
+Monto de Venta = SUM(fctVentas[Monto])
+
+
+Monto Promedio Diario = 
+AVERAGEX(
+    VALUES(dimCalendario[Fecha]),
+    [Monto de Venta]
+)
+
+
+Monto Promedio Diario por Cliente = 
+AVERAGEX(
+    SUMMARIZE(
+            fctVentas,
+            dimCalendario[Fecha],
+            dimCliente[ID_Cliente]
+    ),
+    [Monto de Venta]
+)
+
+
+Monto Promedio Diario por Cliente (SUMMARIZECOLUMNS) = 
+AVERAGEX(
+    SUMMARIZECOLUMNS(
+        dimCalendario[Fecha],
+        dimCliente[ID_Cliente],
+        fctVentas
+    ),
+    [Monto de Venta]
+)
